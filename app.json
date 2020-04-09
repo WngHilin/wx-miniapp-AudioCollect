@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/tasks/tasks",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/record/record"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "AudioCollect",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#d81e06",
+    "backgroundColor": "",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/tasks/tasks",
+        "text": "任务",
+        "iconPath": "icons/task.png",
+        "selectedIconPath": "icons/task_select.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "个人中心",
+        "iconPath": "icons/my.png",
+        "selectedIconPath": "icons/my_select.png"
+      }
+    ]
+  }
+}

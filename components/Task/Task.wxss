@@ -1,0 +1,19 @@
+/* components/Task/Task.wxss */
+
+.normal {
+    font-size: 25rpx;
+    color: black;
+}
+
+.small {
+    font-size: 20rpx;
+    color: gray;
+}
+
+.item-right {
+    float: right;
+}
+
+.box {
+    padding: 20rpx;
+}
