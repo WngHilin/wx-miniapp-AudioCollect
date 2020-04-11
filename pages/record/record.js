@@ -1,132 +1,182 @@
-// pages/record/record.js
+const app = getApp();
+const recorderManager = wx.getRecorderManager();
+var innerAudioContext = wx.createInnerAudioContext();
+var tempFilePath;
+
 Page({
-  const recordManager = wx.getRecorderManager(),
   /**
    * 页面的初始数据
    */
   data: {
-    is_clock: false
+    hasRecord: false,
+    isDot: "block",
+    isTouchStart: false,
+    isTouchEnd: false,
+    value: '100',
+    touchStart:0,
+    touchEnd:0,
+    vd:''
   },
 
-  /**
-   * 录音开始
-   */
-  handleRecordStart: function (e) {
-    this.setData({
-      is_clock: true, //长按时设置为true，为可发送状态
-      startPoint: e.touches[0], //记录触摸点的坐标信息
-    })
-    //录音参数
-    const options = {
-      duration: 10000,
-      sampleRate: 16000, 
-      numberOfChannels: 1, 
-      encodeBitRate: 48000,
-      format: 'mp3'
-    }
-    //开始录音
-    recorderManager.start(options)
-  },
-
-  /**
-   * 录音停止
-   */
-   handleRecordStop: function (e) {
-    recorderManager.stop() //结束录音
-    //先判断是否需要发送录音
-    if(this.data.is_clock == true){
-      var that = this
-      //对停止录音进行监控
-      recorderManager.onStop((res)=>{
-        //对录音时长进行判断，少于2s不进行发送，并进行提示
-        if(res.duration<2000){
-          wx.showToast({
-            title: '录音时间太短，请长安录音',
-            icon: 'none',
-            duration: 1000,
-            mask: false,
-          })
-        }else{
-          //进行语音发送
-          const {tempFilePath} = res
-          wx.wx.showLoading({
-            title: '上传中',
-            mask: true,
-            success: (result)=>{
-              
-            },
-            fail: ()=>{},
-            complete: ()=>{}
-          });
-        }
-      })
-    }
-  },
-
-  /**
-   * 滑动取消发送
-   */
-  handleTouchMove:function(e){
-    //计算距离，当滑动的垂直距离大于25时，则取消发送语音
-     if (Math.abs(e.touches[e.touches.length - 1].clientY - this.data.startPoint.clientY)>25){
-       this.setData({
-         is_clock: false//设置为不发送语音
-       })
-     }
-   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    var a = this;
+    wx.authorize({
+      scope: "scope.record",
+      success: function() {
+        console.log("录音授权成功");
+      },
+      fail: function() {
+        console.log("录音授权失败");
+      }
+    }), a.onShow()
 
+  },
+  // 点击录音按钮
+  onRecordClick: function () {
+    wx.getSetting({
+      success: function (t) {
+        console.log(t.authSetting), t.authSetting["scope.record"] ? console.log("已授权录音") : (console.log("未授权录音"),
+          wx.openSetting({
+            success: function (t) {
+              console.log(t.authSetting);
+            }
+          }));
+      }
+    });
+  },
+  /**
+   * 长按录音开始
+   */
+  recordStart: function(e) {
+    var n = this;
+    var a = 60, o = 10;
+    n.setData({
+      touchStart: e.timeStamp,
+      isTouchStart: true,
+      isTouchEnd: false,
+      showPg: true,
+    });
+    const options = {
+      duration: 60000,
+      sampleRate: 32000,
+      numberOfChannels: 1, 
+      encodeBitRate: 96000,
+      format: 'wav', 
+      frameSize: 50,
+    };
+
+    //开始录音
+    recorderManager.start(options);
+    recorderManager.onStart(() => {
+      console.log('recorder start');
+    });
+
+    //错误回调
+    recorderManager.onError((res) => {
+      console.log(res)
+    });
+
+    
+    //上方进度条
+    this.timer = setInterval(function () {
+      n.setData({
+        value: n.data.value - 100 / 6000
+      }), (o += 10) >= 1e3 && o % 1e3 == 0 && (a-- , console.log(a), a <= 0 && (recorderManager.stop(),
+        clearInterval(n.timer), n.animation2.scale(1, 1).step(), n.setData({
+          animationData: n.animation2.export(),
+        showPg: false,
+        })));
+    }, 10);
+  },
+  /**
+   * 长按录音结束
+   */
+  recordTerm: function(e) {
+    this.setData({
+      isTouchEnd: true,
+      isTouchStart: false,
+      touchEnd: e.timeStamp,
+      showPg: false,
+      value: 100
+    }), clearInterval(this.timer);
+
+    recorderManager.stop();
+    recorderManager.onStop((res) => {
+      this.tempFilePath = res.tempFilePath;
+      console.log('停止录音', res.tempFilePath);
+      const { tempFilePath } = res;
+    })
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 播放声音
    */
-  onReady: function () {
+  play: function () {
+    innerAudioContext.autoplay = true;
+    innerAudioContext.src = this.tempFilePath,
+      innerAudioContext.onPlay(() => {
+        console.log('开始播放')
+      });
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  }, 
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  upload: function () {
+    wx.showModal({
+      title: '确认',
+      content: '是否确认上传？',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#000000',
+      confirmText: '确定',
+      confirmColor: '#3CC51F',
+      success: (result) => {
+        if(result.confirm){
+          wx.uploadFile({
+            url: 'https://localhost:3000/voice',
+            filePath: this.tempFilePath,
+            name: 'file',
+            header: {
+              "Content-Type": "multipart/form-data"
+            },
+            formData: {
+              userId: 12345678 //附加信息为用户ID
+            },
+            success: (result)=>{
+              console.log(result);
+              wx.showToast({
+                title: '上传成功',
+                icon: 'success',
+                duration: 1500,
+                mask: false,
+              });
+            },
+            fail: (result)=>{
+              console.log(result);
+              wx.showToast({
+                title: '上传失败',
+                icon: 'none',
+                duration: 1500,
+                mask: false,
+              });
+            },
+          });
+        } else {
+          wx.showToast({
+            title: '已取消上传',
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          });
+        }
+      },
+      fail: ()=>{},
+      complete: ()=>{}
+    });
   }
 })
