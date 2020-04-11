@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/record/record",
     "pages/tasks/tasks",
+    "pages/record/record",
     "pages/index/index",
     "pages/logs/logs"
   ],
