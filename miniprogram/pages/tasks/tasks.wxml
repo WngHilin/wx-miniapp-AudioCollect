@@ -1,0 +1,8 @@
+<!--pages/tasks/tasks.wxml-->
+<view class="box">
+    <block wx:for="{{words}}" wx:for-index="index" wx:for-item="item" wx:key='{{index}}'>
+        <Task wordName="{{item}}" wordNum="{{wordNum[index]}}" remain="{{100-wordNum[index]}}"></Task>
+        <!-- 分割线 -->
+        <view class="divLine"></view>
+    </block>
+</view>
