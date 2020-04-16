@@ -138,7 +138,7 @@ Page({
       success: (result) => {
         if(result.confirm){
           wx.uploadFile({
-            url: 'https://localhost:3000/voice',
+            url: 'https://127.0.0.1:3000/api/upload',
             filePath: this.tempFilePath,
             name: 'file',
             header: {

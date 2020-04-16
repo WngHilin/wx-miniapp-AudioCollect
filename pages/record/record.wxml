@@ -5,6 +5,5 @@
     <image mode="widthFix" src="../../icons/record.png"></image>
   </view>
 </view>
-
 <button bindtap="upload">上传音频</button>
 <button bindtap="play">播放录音</button>
