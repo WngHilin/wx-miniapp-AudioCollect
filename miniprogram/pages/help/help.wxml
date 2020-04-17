@@ -1,0 +1,35 @@
+<view class="container">
+<view class="title"> 
+语音录制说明
+</view>
+<view class="subtitle"> 
+1.录音内容
+</view>
+<view class="body"> 
+请根据“任务”中各项录音任务中要求的词条录制。
+</view>
+<view class="subtitle"> 
+2.录音环境
+</view>
+<view class="body">
+请尽量在较为安静的环境下进行录制。
+</view>
+<view class="subtitle"> 
+3.录音操作
+</view>
+<view class="body">
+按住绿色录音键开始录音，手指松开录音结束。
+</view>
+<view class="subtitle"> 
+4.注意事项
+</view>
+<view class="body">
+（1）录音最长时间为60s，请连续读出给定的词条（保持正常说话的音量和语速即可，每条词条一般不超过1s钟）。
+</view>
+<view class="body">
+（2）上传音频前请先点击“播放录音”试听录音效果，确认无误后再点击“上传音频”完成上传。
+</view>
+<view class="body bold">
+（3）每一段音频中，为了保证词语分割的准确性和效率，请尽量在安静的环境下录音。录音时，每两个词之间的时间间隔尽量保持适中（间隔过长分割效率会降低，间隔过短分割有可能会出错），如果不好把握，间隔可以稍微长一些。
+</view>
+</view>

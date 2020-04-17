@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "Task": "/components/Task/Task"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

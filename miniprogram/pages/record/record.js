@@ -150,6 +150,8 @@ Page({
     let _this = this
     let wordName = this.data.wordName
     let count = this.data.audioCount
+    let path = 'audio/'+wordName+'/'+wordName+count+'.wav'
+
     console.log(count)
     wx.showModal({
       title: '确认',
@@ -161,8 +163,20 @@ Page({
       confirmColor: '#3CC51F',
       success: (result) => {
         if(result.confirm){
+          // 数据库添加文件路径
+          console.log('开始添加路径')
+          wx.cloud.callFunction({
+            name: 'addFilePath', 
+            data: {
+              data1: path
+            },
+            success: function(res) {
+              console.log(res)
+            }
+          })
+          // 上传文件
           wx.cloud.uploadFile({
-            cloudPath: 'audio/'+wordName+'/'+wordName+count+'.wav',
+            cloudPath: path,
             filePath: this.tempFilePath,
             success: (result)=>{
               console.log(result.fileID);
