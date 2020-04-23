@@ -20,6 +20,7 @@ Page({
     vd:'',
     wordName: '',
     audioCount: 0, //该文件中语音的数量
+    nickName: '',
   },
 
   /**
@@ -30,19 +31,23 @@ Page({
     
     // navigator传过来的值
     var name = options.wordName
+    var nickname = options.nickName
+
     // 获取该类音频的数量
     db.collection('words').where({
       name: name
     })
     .get().then(res => {
-      console.log(name)
+      console.log(nickname)
       _this.setData({
         wordName: name, 
-        audioCount: res.data[0].count
+        audioCount: res.data[0].count,
+        nickName: nickname
       })
       console.log(res.data[0].count)
     })
-    
+    console.log(this.data.nickName)
+
     wx.authorize({
       scope: "scope.record",
       success: function() {
@@ -150,9 +155,9 @@ Page({
     let _this = this
     let wordName = this.data.wordName
     let count = this.data.audioCount
-    let path = 'audio/'+wordName+'/'+wordName+count+'.wav'
-
-    console.log(count)
+    let nickname = this.data.nickName
+    let path = 'audio/'+nickname+'/'+nickname+count+'.wav'
+    
     wx.showModal({
       title: '确认',
       content: '是否确认上传？',
@@ -163,23 +168,24 @@ Page({
       confirmColor: '#3CC51F',
       success: (result) => {
         if(result.confirm){
-          // 数据库添加文件路径
-          console.log('开始添加路径')
-          wx.cloud.callFunction({
-            name: 'addFilePath', 
-            data: {
-              data1: path
-            },
-            success: function(res) {
-              console.log(res)
-            }
-          })
           // 上传文件
           wx.cloud.uploadFile({
             cloudPath: path,
             filePath: this.tempFilePath,
             success: (result)=>{
-              console.log(result.fileID);
+              let fileid = result.fileID
+              // 数据库添加文件路径
+              console.log('开始添加路径')
+              wx.cloud.callFunction({
+                name: 'addFilePath', 
+                data: {
+                  data1: path,
+                  data2: fileid
+                },
+                success: function(res) {
+                  console.log(res)
+                }
+              })
               wx.showToast({
                 title: '上传成功',
                 icon: 'success',

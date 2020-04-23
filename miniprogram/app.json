@@ -38,16 +38,16 @@
         "selectedIconPath": "icons/首页2.png"
       },
       {
-        "pagePath": "pages/help/help",
-        "text": "帮助",
-        "iconPath": "icons/帮助1.png",
-        "selectedIconPath": "icons/帮助2.png"
-      },
-      {
         "pagePath": "pages/tasks/tasks",
         "text": "任务",
         "iconPath": "icons/task.png",
         "selectedIconPath": "icons/task_select.png"
+      },
+      {
+        "pagePath": "pages/help/help",
+        "text": "帮助",
+        "iconPath": "icons/帮助1.png",
+        "selectedIconPath": "icons/帮助2.png"
       }
     ]
   },

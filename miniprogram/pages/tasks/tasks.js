@@ -9,6 +9,7 @@ Page({
   data: {
     words: [],
     wordNum: [],
+    nick_name: []
   },
 
   /**
@@ -24,13 +25,16 @@ Page({
     db.collection('words').get().then(res => {
       let temp1 = []
       let temp2 = []
+      let temp3 = []
       for(let i = 0; i < res.data.length; i++){
         temp1.push(res.data[i].name)
         temp2.push(res.data[i].count)
+        temp3.push(res.data[i].nick_name)
       }
       this.setData({
         words: temp1, 
-        wordNum: temp2
+        wordNum: temp2,
+        nick_name: temp3
       })
     })
   },

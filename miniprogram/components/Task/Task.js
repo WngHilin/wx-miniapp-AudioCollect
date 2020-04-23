@@ -20,6 +20,11 @@ Component({
     wordName: {
       type: String,
       value: ""
+    },
+    // 别名
+    nickName: {
+      type: String,
+      value: ""
     }
   },
   methods: {}
