@@ -1,42 +1,26 @@
-// pages/tasks/tasks.js
-const app = getApp()
-wx.cloud.init()
-
+// miniprogram/pages/test/test.js
+var innerAudioContext = wx.createInnerAudioContext();
 Page({
+
   /**
    * 页面的初始数据
    */
   data: {
-    words: [],
-    wordNum: [],
-    nick_name: []
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.stopPullDownRefresh()
-    var _this = this
-    const db = wx.cloud.database({
-      env: 'audiocollect-ruiud'
+    innerAudioContext.src = "cloud://audiocollect-ruiud.6175-audiocollect-ruiud-1301814726/audio/switch-mode/switch-mode0.wav"
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
     })
+  },
 
-    db.collection('words').get().then(res => {
-      let temp1 = []
-      let temp2 = []
-      let temp3 = []
-      for(let i = 0; i < res.data.length; i++){
-        temp1.push(res.data[i].name)
-        temp2.push(res.data[i].count)
-        temp3.push(res.data[i].nick_name)
-      }
-      this.setData({
-        words: temp1, 
-        wordNum: temp2,
-        nick_name: temp3
-      })
-    })
+  play: function() {
+    innerAudioContext.play()
   },
 
   /**
@@ -71,11 +55,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    var that=this;
-    that.setData({
-      currentTab:0
-    })
-    this.onLoad();
+
   },
 
   /**

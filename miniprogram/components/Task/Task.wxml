@@ -5,9 +5,9 @@
             <!-- 任务编号 -->
             <text class="normal">{{wordName}}\n</text>
             <!-- 词条数 -->
-            <text class="small">已收集录音数: {{wordNum}}</text>
+            <text class="small">读音: {{nickName}}</text>
             <!-- 剩余数 -->
-            <text class="normal item-right">剩余数: {{remain}}</text>
+            <text class="normal item-right">已收集: {{wordNum}}</text>
         </view>
     </navigator>
 </view>
