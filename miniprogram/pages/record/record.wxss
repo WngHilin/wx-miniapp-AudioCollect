@@ -81,7 +81,8 @@
 .remind {
   display: flex;
   justify-content: center;
-  font-size: 40rpx;
+  font-size: 50rpx;
+  font-weight: large;
 }
 
 .btn {

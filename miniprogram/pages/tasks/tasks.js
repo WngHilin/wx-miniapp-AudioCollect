@@ -76,6 +76,7 @@ Page({
       currentTab:0
     })
     this.onLoad();
+
   },
 
   /**

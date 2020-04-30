@@ -1,19 +1,30 @@
+.background{
+  width:100%;
+  height: 100%;
+  color: white;
+  position: fixed;
+  background-size: 100% 100%;
+  z-index: -1;
+}
 .title{
-  padding-top: 20rpx;
+  padding-top: 30rpx;
   width: 100%;
-  font-size: large;
+  font-weight: 600;
+  font-size: medium;
   text-align: center;
 }
 .subtitle{
   padding-top: 40rpx;
   width: 100%;
+  font-weight: 600;
   font-size: large;
   text-align: center;
 }
 .body{
-  padding-top: 25rpx;
-  width: 90%;
-  font-size: medium;
+  padding-top: 20rpx;
+  width: 80%;
+  font-weight: 500;
+  font-size: 35rpx;
   text-align: left;
 }
 .promise{

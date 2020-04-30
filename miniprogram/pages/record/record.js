@@ -1,9 +1,6 @@
 const app = getApp();
 const recorderManager = wx.getRecorderManager();
-// 当前录音的上下文
 var innerAudioContext = wx.createInnerAudioContext();
-// 示范录音的上下文
-var innerAudioContext1 = wx.createInnerAudioContext()
 var db = wx.cloud.database()
 var util = require('../../utils/util')
 var tempFilePath;
@@ -24,7 +21,6 @@ Page({
     wordName: '',
     audioCount: 0, //该文件中语音的数量
     nickName: '',
-    have_example: false,
   },
 
   /**
@@ -42,10 +38,10 @@ Page({
       name: name
     })
     .get().then(res => {
+      console.log(nickname)
       _this.setData({
         wordName: name, 
         audioCount: res.data[0].count,
-        have_example: res.data[0].have_example,
         nickName: nickname
       })
       console.log(res.data[0].count)
@@ -63,7 +59,6 @@ Page({
     }), _this.onShow()
 
   },
-
   // 点击录音按钮
   onRecordClick: function () {
     wx.getSetting({
@@ -145,12 +140,9 @@ Page({
    * 播放声音
    */
   play: function () {
-    // 停止示范录音的播放，防止两个音频一起播放
-    innerAudioContext1.stop()
+    innerAudioContext.autoplay = true;
     innerAudioContext.src = this.tempFilePath,
-
-    innerAudioContext.play()
-    innerAudioContext.onPlay(() => {
+      innerAudioContext.onPlay(() => {
         console.log('开始播放')
       });
     innerAudioContext.onError((res) => {
@@ -240,109 +232,5 @@ Page({
       fail: ()=>{},
       complete: ()=>{}
     });
-  },
-
-  uploadAsExample: function () {
-    let _this = this
-    let wordName = this.data.wordName
-    let count = this.data.audioCount
-    let nickname = this.data.nickName
-    let path = 'example/'+nickname+'/'+nickname+'.wav'
-    
-    wx.showModal({
-      title: '确认',
-      content: '是否确认上传？',
-      showCancel: true,
-      cancelText: '取消',
-      cancelColor: '#000000',
-      confirmText: '确定',
-      confirmColor: '#3CC51F',
-      success: (result) => {
-        if(result.confirm){
-          // 上传文件
-          wx.cloud.uploadFile({
-            cloudPath: path,
-            filePath: this.tempFilePath,
-            success: (result)=>{
-              let fileid = result.fileID
-              // 数据库添加样例id
-              wx.cloud.callFunction({
-                name: 'addExampleID', 
-                data: {
-                  wordName: wordName,
-                  data: fileid
-                }, 
-                success: function(res) {
-                  console.log(res)
-                }
-              })
-              wx.showToast({
-                title: '上传成功',
-                icon: 'success',
-                duration: 1500,
-                mask: false,
-              });
-            },
-            fail: (result)=>{
-              console.log(result);
-              wx.showToast({
-                title: '上传失败',
-                icon: 'none',
-                duration: 1500,
-                mask: false,
-              });
-            },
-          })
-        } else {
-          wx.showToast({
-            title: '已取消上传',
-            icon: 'none',
-            duration: 1500,
-            mask: false,
-          });
-        }
-      },
-      fail: ()=>{},
-      complete: ()=>{}
-    });
-    
-  }, 
-  playExample: function() {
-    var nick = this.data.nickName
-    console.log(nick)
-    // 停止当前录音的播放，防止两个音频一起播放
-    db.collection('words')
-      .where({
-        nick_name: nick
-      })
-      .get({
-        success: function(res){
-          console.log(res.data[0].example_id)
-          innerAudioContext1.src = res.data[0].example_id
-        }
-      })
-    // 停止当前录音的播放，防止两个音频一起播放
-    innerAudioContext.stop()
-
-    innerAudioContext1.play()
-    innerAudioContext1.onPlay(() => {
-        console.log('开始播放')
-      });
-    innerAudioContext1.onError((res) => {
-      console.log('error message: ')
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
-  },
-
-  /**
-   * 下拉刷新
-   */
-  onPullDownRefresh: function () {
-    var that=this;
-    that.setData({
-      currentTab:0
-    })
-    this.onLoad();
-  },
+  }
 })

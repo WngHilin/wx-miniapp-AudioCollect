@@ -7,9 +7,7 @@
 </view>
 <text class="remind">{{wordName}}</text>
 <view class="btn">
-  <button bindtap="upload">上传音频</button>
   <button bindtap="play">播放录音</button>
-
-  <button wx:if="{{have_example}}" bindtap="playExample">播放示范</button>
-  <button wx:else bindtap="uploadAsExample">上传至示范音频</button>
+  <button bindtap="upload">上传音频</button>
 </view>
+

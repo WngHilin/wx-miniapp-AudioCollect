@@ -1,10 +1,28 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/record/record",
     "pages/tasks/tasks",
-    "pages/help/help"
+    "pages/index/index", 
+    "pages/record/record",
+    "pages/help/help",
+    "pages/user/user",
+    "pages/info/info",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/openapi/serverapi/serverapi",
+    "pages/openapi/callback/callback",
+    "pages/openapi/cloudid/cloudid",
+    "pages/im/im",
+    "pages/im/room/room"
   ],
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -20,22 +38,22 @@
     "borderStyle": "black",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "icons/首页1.png",
-        "selectedIconPath": "icons/首页2.png"
-      },
-      {
         "pagePath": "pages/tasks/tasks",
         "text": "任务",
-        "iconPath": "icons/task.png",
-        "selectedIconPath": "icons/task_select.png"
+        "iconPath": "icons/任务1.png",
+        "selectedIconPath": "icons/任务2.png"
       },
       {
         "pagePath": "pages/help/help",
         "text": "帮助",
         "iconPath": "icons/帮助1.png",
         "selectedIconPath": "icons/帮助2.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "icons/用户1.png",
+        "selectedIconPath": "icons/用户2.png"
       }
     ]
   },

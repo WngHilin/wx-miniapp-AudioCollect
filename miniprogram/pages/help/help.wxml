@@ -1,4 +1,5 @@
 <view class="container">
+<image class="background" src="../../icons/语音3.png" mode="aspectFit"></image>
 <view class="title"> 
 语音录制说明
 </view>
@@ -29,7 +30,7 @@
 <view class="body">
 （2）上传音频前请先点击“播放录音”试听录音效果，确认无误后再点击“上传音频”完成上传。
 </view>
-<view class="body bold">
+<view class="body">
 （3）每一段音频中，为了保证词语分割的准确性和效率，请尽量在安静的环境下录音。录音时，每两个词之间的时间间隔尽量保持适中（间隔过长分割效率会降低，间隔过短分割有可能会出错），如果不好把握，间隔可以稍微长一些。
 </view>
 </view>

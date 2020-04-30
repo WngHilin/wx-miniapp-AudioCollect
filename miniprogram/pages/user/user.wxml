@@ -1,0 +1,33 @@
+<!--pages/user/user.wxml-->
+<view>
+ <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+</view>
+
+<view class="weui-cells__title">个人信息</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">我的昵称</view>
+                <view class="weui-cell__ft">{{userInfo.nickName}}</view>
+            </view>
+        </view>
+
+
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+        <view class="weui-cell__bd">性别
+        </view>
+        <view class="weui-cell__ft">
+         <text>{{isChecked1}}</text>
+        <switch checked="{{isChecked1}}" bindchange="changeSwitch1"/>
+        </view>
+    </view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/info/info" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">年龄</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">20</view>
+            </navigator>
+</view>
+
+
