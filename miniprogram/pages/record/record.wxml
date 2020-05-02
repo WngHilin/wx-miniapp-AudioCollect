@@ -9,5 +9,8 @@
 <view class="btn">
   <button bindtap="play">播放录音</button>
   <button bindtap="upload">上传音频</button>
+
+  <button wx:if="{{!have_example}}" bindtap="uploadAsExample">上传示范音频</button>
+  <button wx:else bindtap="playExample">播放示范音频</button>
 </view>
 

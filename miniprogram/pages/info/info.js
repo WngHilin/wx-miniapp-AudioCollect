@@ -48,6 +48,14 @@ Page({
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
   },
 
+  backward: function () {
+    wx.navigateBack({
+      complete: (res) => {
+        console.log('返回成功')
+      },
+    })
+  },
+
 
 
   /**
@@ -104,5 +112,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
 })

@@ -17,7 +17,7 @@
         <view class="weui-cell__bd">性别
         </view>
         <view class="weui-cell__ft">
-         <text>{{isChecked1}}</text>
+         <text>{{sex}}</text>
         <switch checked="{{isChecked1}}" bindchange="changeSwitch1"/>
         </view>
     </view>

@@ -11,6 +11,6 @@
 </view>
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="btn">
-    <button size="default" type="primary" formType="submit" >提交</button>
+    <button size="default" type="primary" formType="submit" bindtap="backward">提交</button>
   </view>
 </form>

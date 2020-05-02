@@ -8,7 +8,8 @@ var pageObj = {
       canIUse: wx.canIUse('button.open-type.getUserInfo'),
       focus: false,
       inputValue: '',
-      isChecked1:false
+      isChecked1:false,
+      sex: '女'
   },
 
   //事件处理函数
@@ -60,6 +61,15 @@ for (var i = 1; i <=1; ++i) {
       pageObj['changeSwitch'+i] = function (e) {
           var changedData = {};
           changedData['isChecked'+i] = !this.data['isChecked'+i];
+          if(changedData['isChecked'+i]){
+            this.setData({
+                sex: '女',
+            })
+          } else {
+              this.setData({
+                  sex: '男'
+              })
+          }
           this.setData(changedData);
       }
   })(i)
