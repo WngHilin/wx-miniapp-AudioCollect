@@ -1,5 +1,6 @@
 // pages/user/user.js
 const app = getApp()
+const db = wx.cloud.database()
 var pageObj = {
 
   data: {

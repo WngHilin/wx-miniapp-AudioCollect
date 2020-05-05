@@ -1,7 +1,10 @@
 //app.js
-App({
-  onLaunch: function () {
+wx.cloud.init()
+const db = wx.cloud.database()
 
+App({
+   onLaunch: function () {
+    var that = this
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -23,9 +26,33 @@ App({
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res.code)//登录成功后获取js_code
+        wx.request({
+          url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + that.globalData.appid + '&secret=' + that.globalData.secret + '&js_code=' + res.code + '&grant_type=authorization_code',//获取openid的url，请求微信服务器
+          data: {},
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            that.globalData.openid = res.data.openid
+            //app.globalData.test="hello"
+            console.log("1: ", res.data.openid)
+            let result = res
+            // 判断数据库中是否有该用户，没有则加入数据库
+            wx.cloud.callFunction({
+              name: 'addUser', 
+              data: {
+                openid: result.data.openid,
+              },
+              success: function(res) {
+                console.log(res)
+              }
+          })
+          }
+        })
       }
     })
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -48,6 +75,11 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    appid: "wx36c2130b391f6a75",
+    secret: "2af608a70df21048483bd939bc15e4b2",
+    userInfo: null,
+    openid: null, 
+    userAge: 20,
+    userSex: '女'
   }
 })
